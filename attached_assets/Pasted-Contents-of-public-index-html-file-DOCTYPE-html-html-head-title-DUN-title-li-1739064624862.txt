@@ -1,0 +1,402 @@
+Contents of public/index.html file
+<!DOCTYPE html>
+<html>
+<head>
+    <title>DUN</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="/styles/main.css">
+</head>
+<body>
+    <!-- Top Banner -->
+    <div class="top-banner">
+        <div class="brand">
+            <div class="logo">DUN</div>
+            <div class="main-controls">
+                <input type="text" placeholder="Enter task">
+                <button class="accent-btn">Add</button>
+            </div>
+        </div>
+        
+        <div class="panel-controls">
+            <select class="filter-dropdown">
+                <option>All</option>
+            </select>
+            <div class="panel-toggles">
+                <i class="fas fa-tasks active" data-panel="tasks-panel"></i>
+                <i class="fas fa-bullseye" data-panel="priority-panel"></i>
+                <i class="fas fa-clock" data-panel="hours-panel"></i>
+                <i class="fas fa-lightbulb" data-panel="reflect-panel"></i>
+                <i class="fas fa-hourglass" data-panel="minutes-panel"></i>
+            </div>
+        </div>
+    </div>
+
+    <!-- Panel Container -->
+    <div class="panel-container">
+        <!-- Tasks Panel -->
+        <section id="tasks-panel" class="panel">
+            <h2>Tasks</h2>
+            <div class="section-group">
+                <div class="task-section">
+                    <h3>Triage</h3>
+                    <div class="task-list">
+                        <div class="task-item">Triage Task</div>
+                        <div class="task-item child">Mail-check</div>
+                    </div>
+                </div>
+                <div class="task-section">
+                    <h3>A</h3>
+                    <div class="task-list">
+                        <div class="task-item">Sample Task A</div>
+                    </div>
+                </div>
+                <div class="task-section">
+                    <h3>B</h3>
+                    <div class="task-list">
+                        <div class="task-item">Sample Task B</div>
+                    </div>
+                </div>
+                <div class="task-section">
+                    <h3>C</h3>
+                    <div class="task-list">
+                        <div class="task-item">Sample Task C</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Priority Panel -->
+        <section id="priority-panel" class="panel hidden">
+            <h2>Priority</h2>
+            <div class="priority-grid">
+                <div class="priority-item">
+                    <span class="task-title">Sample Task</span>
+                    <div class="attributes">
+                        <div class="attribute-box"></div>
+                        <div class="attribute-box"></div>
+                        <div class="attribute-box"></div>
+                        <div class="attribute-box"></div>
+                        <div class="attribute-box"></div>
+                    </div>
+                </div>
+                <div class="no-tasks">No tasks available</div>
+            </div>
+        </section>
+
+        <!-- Hours Panel -->
+        <section id="hours-panel" class="panel hidden">
+            <h2>Hours</h2>
+            <div class="hour-list">
+                <div class="hour-block am">12 AM</div>
+                <div class="hour-block am">1 AM</div>
+                <!-- ... more hour blocks ... -->
+                <div class="hour-block pm">12 PM</div>
+                <div class="hour-block pm">1 PM</div>
+                <!-- ... more hour blocks ... -->
+                <div class="hour-block am">12 AM</div>
+            </div>
+        </section>
+
+        <!-- Reflect Panel -->
+        <section id="reflect-panel" class="panel hidden">
+            <h2>Reflect</h2>
+            <div class="reflect-content">
+                <div class="question-block">What went well today?</div>
+                <div class="question-block">What could be improved?</div>
+                <div class="question-block">Key takeaways:</div>
+            </div>
+        </section>
+
+        <!-- Minutes Panel -->
+        <section id="minutes-panel" class="panel hidden">
+            <h2>Minutes</h2>
+            <div class="timer-container">
+                <div class="timer-display">25:00</div>
+                <div class="timer-controls">
+                    <button class="timer-btn">Start</button>
+                    <button class="timer-btn">Pause</button>
+                    <button class="timer-btn">+1</button>
+                    <button class="timer-btn">-1</button>
+                    <button class="timer-btn">Reset</button>
+                    <button class="timer-btn accent-btn">Done</button>
+                </div>
+                <div class="task-total">Task Total: 0 min</div>
+            </div>
+        </section>
+    </div>
+
+    <script src="/src/main.js"></script>
+</body>
+</html>
+End of public/index.html file
+
+Contents of styles/main.css file
+:root {
+    --bg-color: #212121;
+    --panel-bg: #2A2A2A;
+    --text-color: #dddddd;
+    --accent: #00CEF7;
+    --border-color: #404040;
+}
+
+body {
+    background: var(--bg-color);
+    color: var(--text-color);
+    font-family: 'Segoe UI', sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+/* Top Banner */
+.top-banner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+}
+
+.logo {
+    font-size: 2rem;
+    font-weight: bold;
+    color: var(--accent);
+}
+
+.main-controls {
+    display: flex;
+    gap: 0.5rem;
+}
+
+input[type="text"] {
+    background: var(--panel-bg);
+    border: 1px solid var(--border-color);
+    color: var(--text-color);
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    min-width: 300px;
+}
+
+.accent-btn {
+    background: var(--accent);
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.panel-controls {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.filter-dropdown {
+    background: var(--panel-bg);
+    border: 1px solid var(--border-color);
+    color: var(--text-color);
+    padding: 0.5rem;
+}
+
+.panel-toggles {
+    display: flex;
+    gap: 1.5rem;
+}
+
+.panel-toggles i {
+    font-size: 1.2rem;
+    cursor: pointer;
+    opacity: 0.5;
+    transition: opacity 0.2s;
+}
+
+.panel-toggles i.active {
+    opacity: 1;
+    color: var(--accent);
+}
+
+.panel-toggles i:hover {
+    opacity: 1;
+}
+
+/* Panel Container */
+.panel-container {
+    display: flex;
+    gap: 2rem;
+    padding: 2rem;
+    overflow-x: auto;
+    white-space: nowrap;
+}
+
+.panel {
+    background: var(--panel-bg);
+    border-radius: 8px;
+    padding: 1.5rem;
+    min-width: 300px;
+    max-width: 560px;
+    flex: 0 0 auto;
+    height: 80vh;
+    overflow-y: auto;
+}
+
+.panel.hidden {
+    display: none;
+}
+
+.panel h2 {
+    color: var(--accent);
+    margin-top: 0;
+    margin-bottom: 1.5rem;
+}
+
+/* Tasks Panel */
+.task-section {
+    margin-bottom: 2rem;
+}
+
+.task-section h3 {
+    margin: 0 0 0.5rem 0;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+}
+
+.task-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.task-item {
+    background: #333;
+    padding: 0.75rem;
+    border-radius: 4px;
+    cursor: move;
+    transition: background 0.2s;
+}
+
+.task-item.child {
+    margin-left: 40px;
+}
+
+.task-item:hover {
+    background: #3a3a3a;
+}
+
+/* Priority Panel */
+.priority-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.priority-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.5rem;
+}
+
+.attributes {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.attribute-box {
+    width: 24px;
+    height: 24px;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+}
+
+/* Hours Panel */
+.hour-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.hour-block {
+    padding: 0.5rem;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.hour-block.pm {
+    font-weight: bold;
+    color: var(--accent);
+}
+
+/* Reflect Panel */
+.reflect-content {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.question-block {
+    background: #333;
+    padding: 1rem;
+    border-radius: 4px;
+    min-height: 80px;
+}
+
+/* Minutes Panel */
+.timer-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+}
+
+.timer-display {
+    font-size: 3rem;
+    font-weight: bold;
+    letter-spacing: 2px;
+}
+
+.timer-controls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.timer-btn {
+    background: #333;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    color: var(--text-color);
+    cursor: pointer;
+}
+
+.task-total {
+    margin-top: 1rem;
+    opacity: 0.8;
+}
+End of styles/main.css file
+
+Contents of src/main.js file
+// Panel Toggle Logic
+document.querySelectorAll('.panel-toggles i').forEach(icon => {
+    icon.addEventListener('click', () => {
+        // Toggle active state
+        document.querySelectorAll('.panel-toggles i').forEach(i => i.classList.remove('active'));
+        icon.classList.add('active');
+        
+        // Get target panel
+        const panelId = icon.dataset.panel;
+        const panel = document.getElementById(panelId);
+        
+        // Toggle panel visibility
+        document.querySelectorAll('.panel').forEach(p => p.classList.add('hidden'));
+        panel.classList.remove('hidden');
+    });
+});
+
+// Initial activation of Tasks panel
+document.querySelector('[data-panel="tasks-panel"]').click();
+End of src/main.js file
