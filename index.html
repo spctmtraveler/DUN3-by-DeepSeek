@@ -2,59 +2,146 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width">
-  <title>Task Manager</title>
-  <link href="style.css" rel="stylesheet" type="text/css" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <title>DUN</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="style.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
-  <div class="container">
-    <input type="text" placeholder="Add a task...">
-    <button class="accent-btn">Add Task</button>
-    
-    <section id="priority-panel" class="panel hidden">
-      <h2>Priority</h2>
-      <div class="priority-labels">
-        <div class="priority-label">Fire</div>
-        <div class="priority-label">Fast</div>
-        <div class="priority-label">Flow</div>
-        <div class="priority-label">Fear</div>
-        <div class="priority-label">First</div>
-      </div>
-      <button id="sort-btn" class="accent-btn">Sort</button>
-    </section>
+    <!-- Top Banner -->
+    <div class="top-banner">
+        <div class="brand">
+            <div class="logo">DUN</div>
+            <div class="main-controls">
+                <input type="text" placeholder="Enter task">
+                <button class="accent-btn">Add</button>
+            </div>
+        </div>
+        
+        <div class="panel-controls">
+            <select class="filter-dropdown">
+                <option>All</option>
+            </select>
+            <div class="panel-toggles">
+                <i class="fas fa-tasks active" data-panel="tasks-panel"></i>
+                <i class="fas fa-bullseye" data-panel="priority-panel"></i>
+                <i class="fas fa-clock" data-panel="hours-panel"></i>
+                <i class="fas fa-lightbulb" data-panel="reflect-panel"></i>
+                <i class="fas fa-hourglass" data-panel="minutes-panel"></i>
+            </div>
+        </div>
+    </div>
 
-    <section id="hours-panel" class="panel hidden">
-      <h2>Hours</h2>
-      <div class="hour-list">
-        <div class="hour-block">12 AM</div>
-        <div class="hour-block">1 AM</div>
-        <div class="hour-block">2 AM</div>
-        <div class="hour-block">3 AM</div>
-        <div class="hour-block">4 AM</div>
-        <div class="hour-block">5 AM</div>
-        <div class="hour-block">6 AM</div>
-        <div class="hour-block">7 AM</div>
-        <div class="hour-block">8 AM</div>
-        <div class="hour-block">9 AM</div>
-        <div class="hour-block">10 AM</div>
-        <div class="hour-block">11 AM</div>
-        <div class="hour-block">12 PM</div>
-        <div class="hour-block">1 PM</div>
-        <div class="hour-block">2 PM</div>
-        <div class="hour-block">3 PM</div>
-        <div class="hour-block">4 PM</div>
-        <div class="hour-block">5 PM</div>
-        <div class="hour-block">6 PM</div>
-        <div class="hour-block">7 PM</div>
-        <div class="hour-block">8 PM</div>
-        <div class="hour-block">9 PM</div>
-        <div class="hour-block">10 PM</div>
-        <div class="hour-block">11 PM</div>
-      </div>
-    </section>
-  </div>
-  <script src="script.js"></script>
+    <!-- Panel Container -->
+    <div class="panel-container">
+        <!-- Tasks Panel -->
+        <section id="tasks-panel" class="panel">
+            <h2>Tasks</h2>
+            <div class="section-group">
+                <div class="task-section">
+                    <h3>Triage</h3>
+                    <div class="task-list">
+                        <div class="task-item">Triage Task</div>
+                        <div class="task-item child">Mail-check</div>
+                    </div>
+                </div>
+                <div class="task-section">
+                    <h3>A</h3>
+                    <div class="task-list">
+                        <div class="task-item">Sample Task A</div>
+                    </div>
+                </div>
+                <div class="task-section">
+                    <h3>B</h3>
+                    <div class="task-list">
+                        <div class="task-item">Sample Task B</div>
+                    </div>
+                </div>
+                <div class="task-section">
+                    <h3>C</h3>
+                    <div class="task-list">
+                        <div class="task-item">Sample Task C</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Priority Panel -->
+        <section id="priority-panel" class="panel hidden">
+            <h2>Priority</h2>
+            <div class="priority-grid">
+                <div class="priority-item">
+                    <span class="task-title">Sample Task</span>
+                    <div class="attributes">
+                        <div class="attribute-box"></div>
+                        <div class="attribute-box"></div>
+                        <div class="attribute-box"></div>
+                        <div class="attribute-box"></div>
+                        <div class="attribute-box"></div>
+                    </div>
+                </div>
+                <div class="no-tasks">No tasks available</div>
+            </div>
+        </section>
+
+        <!-- Hours Panel -->
+        <section id="hours-panel" class="panel hidden">
+            <h2>Hours</h2>
+            <div class="hour-list">
+                <div class="hour-block am">12 AM</div>
+                <div class="hour-block am">1 AM</div>
+                <div class="hour-block am">2 AM</div>
+                <div class="hour-block am">3 AM</div>
+                <div class="hour-block am">4 AM</div>
+                <div class="hour-block am">5 AM</div>
+                <div class="hour-block am">6 AM</div>
+                <div class="hour-block am">7 AM</div>
+                <div class="hour-block am">8 AM</div>
+                <div class="hour-block am">9 AM</div>
+                <div class="hour-block am">10 AM</div>
+                <div class="hour-block am">11 AM</div>
+                <div class="hour-block pm">12 PM</div>
+                <div class="hour-block pm">1 PM</div>
+                <div class="hour-block pm">2 PM</div>
+                <div class="hour-block pm">3 PM</div>
+                <div class="hour-block pm">4 PM</div>
+                <div class="hour-block pm">5 PM</div>
+                <div class="hour-block pm">6 PM</div>
+                <div class="hour-block pm">7 PM</div>
+                <div class="hour-block pm">8 PM</div>
+                <div class="hour-block pm">9 PM</div>
+                <div class="hour-block pm">10 PM</div>
+                <div class="hour-block pm">11 PM</div>
+            </div>
+        </section>
+
+        <!-- Reflect Panel -->
+        <section id="reflect-panel" class="panel hidden">
+            <h2>Reflect</h2>
+            <div class="reflect-content">
+                <div class="question-block">What went well today?</div>
+                <div class="question-block">What could be improved?</div>
+                <div class="question-block">Key takeaways:</div>
+            </div>
+        </section>
+
+        <!-- Minutes Panel -->
+        <section id="minutes-panel" class="panel hidden">
+            <h2>Minutes</h2>
+            <div class="timer-container">
+                <div class="timer-display">25:00</div>
+                <div class="timer-controls">
+                    <button class="timer-btn">Start</button>
+                    <button class="timer-btn">Pause</button>
+                    <button class="timer-btn">+1</button>
+                    <button class="timer-btn">-1</button>
+                    <button class="timer-btn">Reset</button>
+                    <button class="timer-btn accent-btn">Done</button>
+                </div>
+                <div class="task-total">Task Total: 0 min</div>
+            </div>
+        </section>
+    </div>
+
+    <script src="script.js"></script>
 </body>
 </html>

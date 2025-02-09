@@ -1,3 +1,22 @@
+// Panel Toggle Logic
+document.querySelectorAll('.panel-toggles i').forEach(icon => {
+    icon.addEventListener('click', () => {
+        // Toggle active state
+        document.querySelectorAll('.panel-toggles i').forEach(i => i.classList.remove('active'));
+        icon.classList.add('active');
+
+        // Get target panel
+        const panelId = icon.dataset.panel;
+        const panel = document.getElementById(panelId);
+
+        // Toggle panel visibility
+        document.querySelectorAll('.panel').forEach(p => p.classList.add('hidden'));
+        panel.classList.remove('hidden');
+    });
+});
+
+// Initial activation of Tasks panel
+document.querySelector('[data-panel="tasks-panel"]').click();
 
 let tasks = [];
 
@@ -8,6 +27,8 @@ document.querySelector('input').addEventListener('keypress', (e) => {
 
 function addTask() {
     const input = document.querySelector('input');
+    if (!input.value.trim()) return;
+
     const newTask = {
         id: Date.now(),
         title: input.value,
