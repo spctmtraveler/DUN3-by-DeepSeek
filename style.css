@@ -1,4 +1,51 @@
+
 html {
   height: 100%;
   width: 100%;
+}
+
+.task-item[data-nesting-level="1"] { margin-left: 40px; }
+.task-item[data-nesting-level="2"] { margin-left: 80px; }
+.task-item[data-nesting-level="3"] { margin-left: 120px; }
+
+.task-actions {
+    display: flex;
+    gap: 8px;
+    position: absolute;
+    right: 10px;
+}
+
+.task-item {
+    position: relative;
+    padding-right: 80px;
+}
+
+.icon-btn {
+    background: none;
+    border: none;
+    color: var(--text-color);
+    cursor: pointer;
+    opacity: 0.7;
+}
+
+.icon-btn:hover {
+    opacity: 1;
+    color: var(--accent);
+}
+
+.selected-task {
+    background-color: rgba(0, 206, 247, 0.2);
+    border: 1px solid var(--accent);
+}
+
+.priority-labels {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 0.5rem;
+}
+
+.priority-label {
+    width: 60px;
+    text-align: center;
+    font-size: 0.8rem;
 }

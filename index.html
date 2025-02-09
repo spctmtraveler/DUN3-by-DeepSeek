@@ -1,16 +1,60 @@
+
 <!DOCTYPE html>
 <html>
-
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width">
-  <title>replit</title>
+  <title>Task Manager</title>
   <link href="style.css" rel="stylesheet" type="text/css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 </head>
-
 <body>
-  Hello world
+  <div class="container">
+    <input type="text" placeholder="Add a task...">
+    <button class="accent-btn">Add Task</button>
+    
+    <section id="priority-panel" class="panel hidden">
+      <h2>Priority</h2>
+      <div class="priority-labels">
+        <div class="priority-label">Fire</div>
+        <div class="priority-label">Fast</div>
+        <div class="priority-label">Flow</div>
+        <div class="priority-label">Fear</div>
+        <div class="priority-label">First</div>
+      </div>
+      <button id="sort-btn" class="accent-btn">Sort</button>
+    </section>
+
+    <section id="hours-panel" class="panel hidden">
+      <h2>Hours</h2>
+      <div class="hour-list">
+        <div class="hour-block">12 AM</div>
+        <div class="hour-block">1 AM</div>
+        <div class="hour-block">2 AM</div>
+        <div class="hour-block">3 AM</div>
+        <div class="hour-block">4 AM</div>
+        <div class="hour-block">5 AM</div>
+        <div class="hour-block">6 AM</div>
+        <div class="hour-block">7 AM</div>
+        <div class="hour-block">8 AM</div>
+        <div class="hour-block">9 AM</div>
+        <div class="hour-block">10 AM</div>
+        <div class="hour-block">11 AM</div>
+        <div class="hour-block">12 PM</div>
+        <div class="hour-block">1 PM</div>
+        <div class="hour-block">2 PM</div>
+        <div class="hour-block">3 PM</div>
+        <div class="hour-block">4 PM</div>
+        <div class="hour-block">5 PM</div>
+        <div class="hour-block">6 PM</div>
+        <div class="hour-block">7 PM</div>
+        <div class="hour-block">8 PM</div>
+        <div class="hour-block">9 PM</div>
+        <div class="hour-block">10 PM</div>
+        <div class="hour-block">11 PM</div>
+      </div>
+    </section>
+  </div>
   <script src="script.js"></script>
 </body>
-
 </html>
