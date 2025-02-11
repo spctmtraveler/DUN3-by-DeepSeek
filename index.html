@@ -33,6 +33,32 @@
 
     <!-- Panel Container -->
     <div class="panel-container">
+        <!-- Priority Panel -->
+        <section id="priority-panel" class="panel hidden">
+            <h2>Priority</h2>
+            <div class="priority-labels">
+                <div class="priority-label">Fire</div>
+                <div class="priority-label">Fast</div>
+                <div class="priority-label">Flow</div>
+                <div class="priority-label">Fear</div>
+                <div class="priority-label">First</div>
+            </div>
+            <div class="priority-grid">
+                <div class="priority-item">
+                    <span class="task-title">Sample Task</span>
+                    <div class="attributes">
+                        <div class="attribute-box"></div>
+                        <div class="attribute-box"></div>
+                        <div class="attribute-box"></div>
+                        <div class="attribute-box"></div>
+                        <div class="attribute-box"></div>
+                    </div>
+                </div>
+                <div class="no-tasks">No tasks available</div>
+            </div>
+            <button id="sort-btn" class="accent-btn">Sort</button>
+        </section>
+
         <!-- Tasks Panel -->
         <section id="tasks-panel" class="panel">
             <h2>Tasks</h2>
@@ -73,31 +99,7 @@
             </div>
         </section>
 
-        <!-- Priority Panel -->
-        <section id="priority-panel" class="panel hidden">
-            <h2>Priority</h2>
-            <div class="priority-labels">
-                <div class="priority-label">Fire</div>
-                <div class="priority-label">Fast</div>
-                <div class="priority-label">Flow</div>
-                <div class="priority-label">Fear</div>
-                <div class="priority-label">First</div>
-            </div>
-            <button id="sort-btn" class="accent-btn">Sort</button>
-            <div class="priority-grid">
-                <div class="priority-item">
-                    <span class="task-title">Sample Task</span>
-                    <div class="attributes">
-                        <div class="attribute-box"></div>
-                        <div class="attribute-box"></div>
-                        <div class="attribute-box"></div>
-                        <div class="attribute-box"></div>
-                        <div class="attribute-box"></div>
-                    </div>
-                </div>
-                <div class="no-tasks">No tasks available</div>
-            </div>
-        </section>
+        
 
         <!-- Hours Panel -->
         <section id="hours-panel" class="panel hidden">
