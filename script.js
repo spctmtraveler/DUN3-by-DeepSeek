@@ -1,20 +1,3 @@
-// Panel Toggle Logic
-document.querySelectorAll('.panel-toggles i').forEach(icon => {
-    icon.addEventListener('click', () => {
-        // Toggle active state for clicked icon
-        icon.classList.toggle('active');
-
-        // Get target panel
-        const panelId = icon.dataset.panel;
-        const panel = document.getElementById(panelId);
-
-        // Toggle panel visibility
-        panel.classList.toggle('hidden');
-    });
-});
-
-// Initial activation of Tasks panel
-document.querySelector('[data-panel="tasks-panel"]').click();
 
 let tasks = [];
 
@@ -80,9 +63,10 @@ function calculateNestingLevel(task) {
 }
 
 function renderTasks() {
-    const container = document.querySelector('.container');
-    const taskList = document.createElement('div');
-    taskList.className = 'task-list';
+    const sections = document.querySelectorAll('.task-section .task-list');
+    sections.forEach(section => {
+        section.innerHTML = '';
+    });
     
     tasks.forEach(task => {
         const taskElement = document.createElement('div');
@@ -90,14 +74,12 @@ function renderTasks() {
         taskElement.textContent = task.title;
         taskElement.dataset.nestingLevel = calculateNestingLevel(task);
         addTaskActions(taskElement, task);
-        taskList.appendChild(taskElement);
+        
+        const section = document.querySelector(`.task-section:has(h3:contains('${task.section}')) .task-list`);
+        if (section) {
+            section.appendChild(taskElement);
+        }
     });
-    
-    const existingTaskList = document.querySelector('.task-list');
-    if (existingTaskList) {
-        existingTaskList.remove();
-    }
-    container.appendChild(taskList);
 }
 
 document.getElementById('sort-btn')?.addEventListener('click', () => {
@@ -105,3 +87,21 @@ document.getElementById('sort-btn')?.addEventListener('click', () => {
     document.querySelectorAll('.attribute-box').forEach(box => box.style.visibility = 'hidden');
     renderTasks();
 });
+
+// Panel Toggle Logic
+document.querySelectorAll('.panel-toggles i').forEach(icon => {
+    icon.addEventListener('click', () => {
+        // Toggle active state for clicked icon
+        icon.classList.toggle('active');
+
+        // Get target panel
+        const panelId = icon.dataset.panel;
+        const panel = document.getElementById(panelId);
+
+        // Toggle panel visibility
+        panel.classList.toggle('hidden');
+    });
+});
+
+// Initial activation of Tasks panel
+document.querySelector('[data-panel="tasks-panel"]').click();
