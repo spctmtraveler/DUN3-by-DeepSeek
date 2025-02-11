@@ -29,23 +29,43 @@ function createTask(title) {
     };
 }
 
-// ========== Updated Panel Toggle Logic ==========
+// ========== Calculate Nesting Level ==========
+function calculateNestingLevel(task) {
+    let level = 0;
+    let currentTask = task;
+    while (currentTask.parentId) {
+        level++;
+        currentTask = tasks.find(t => t.id === currentTask.parentId);
+    }
+    return level;
+}
+
+// ========== Corrected Panel Toggle Logic ==========
 document.querySelectorAll('.panel-toggles i').forEach(icon => {
-    icon.addEventListener('click', () => {
+    icon.addEventListener('click', (e) => {
+        e.stopPropagation();
         const panelId = icon.dataset.panel;
-        const wasActive = icon.classList.contains('active');
+        const panel = document.getElementById(panelId);
         
-        // Close all panels and remove active states
-        document.querySelectorAll('.panel').forEach(p => p.classList.add('hidden'));
-        document.querySelectorAll('.panel-toggles i').forEach(i => i.classList.remove('active'));
-        
-        // Toggle clicked panel
-        if (!wasActive) {
-            document.getElementById(panelId).classList.remove('hidden');
-            icon.classList.add('active');
-        }
+        // Toggle panel visibility
+        panel.classList.toggle('hidden');
+        // Toggle icon active state
+        icon.classList.toggle('active');
     });
 });
+
+// ========== Handle Task Click ==========
+function handleTaskClick(taskElement, task) {
+    selectedTaskId = task.id;
+    showTaskDetails(task);
+    
+    // Open Task Details panel if not already open
+    const taskPanel = document.getElementById('task-panel');
+    if (taskPanel.classList.contains('hidden')) {
+        taskPanel.classList.remove('hidden');
+        document.querySelector('[data-panel="task-panel"]').classList.add('active');
+    }
+}
 
 // ========== Enhanced Task Details ==========
 function showTaskDetails(task) {
@@ -70,7 +90,7 @@ function showTaskDetails(task) {
     `;
 }
 
-// ========== New Feature Implementations ==========
+// ========== Task Management Functions ==========
 function updateTaskAttribute(taskId, attribute, value) {
     const task = tasks.find(t => t.id === taskId);
     if (task) task[attribute] = Number(value);
@@ -93,10 +113,7 @@ function renderTasks() {
         taskElement.dataset.nestingLevel = calculateNestingLevel(task);
         
         addTaskActions(taskElement, task);
-        taskElement.addEventListener('click', () => {
-            selectedTaskId = task.id;
-            showTaskDetails(task);
-        });
+        taskElement.addEventListener('click', () => handleTaskClick(taskElement, task));
 
         const section = document.querySelector(`.task-section:has(h3:contains('${task.section}')) .task-list`);
         if (section) section.appendChild(taskElement);
