@@ -1,0 +1,104 @@
+```text
+Contents of script.js file
+// ========== Add Missing calculateNestingLevel Function ==========
+function calculateNestingLevel(task) {
+    let level = 0;
+    let currentTask = task;
+    while (currentTask.parentId) {
+        level++;
+        currentTask = tasks.find(t => t.id === currentTask.parentId);
+    }
+    return level;
+}
+
+// ========== Corrected Panel Toggle Logic ==========
+document.querySelectorAll('.panel-toggles i').forEach(icon => {
+    icon.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const panelId = icon.dataset.panel;
+        const panel = document.getElementById(panelId);
+        
+        // Toggle panel visibility
+        panel.classList.toggle('hidden');
+        // Toggle icon active state
+        icon.classList.toggle('active');
+    });
+});
+
+// ========== Update Task Click Handler ==========
+function handleTaskClick(taskElement, task) {
+    selectedTaskId = task.id;
+    showTaskDetails(task);
+    
+    // Open Task Details panel if not already open
+    const taskPanel = document.getElementById('task-panel');
+    if (taskPanel.classList.contains('hidden')) {
+        taskPanel.classList.remove('hidden');
+        document.querySelector('[data-panel="task-panel"]').classList.add('active');
+    }
+}
+End of script.js file
+
+Contents of index.html file
+<!-- Corrected Panel Toggles Order -->
+<div class="panel-toggles">
+    <i class="fas fa-bullseye" data-panel="priority-panel"></i>      <!-- Priority -->
+    <i class="fas fa-tasks active" data-panel="tasks-panel"></i>     <!-- Tasks -->
+    <i class="fas fa-check-square" data-panel="task-panel"></i>      <!-- Task Details -->
+    <i class="fas fa-clock" data-panel="hours-panel"></i>            <!-- Hours -->
+    <i class="fas fa-lightbulb" data-panel="reflect-panel"></i>      <!-- Reflect -->
+    <i class="fas fa-hourglass" data-panel="minutes-panel"></i>      <!-- Minutes -->
+</div>
+End of index.html file
+
+Contents of script.js file
+// ========== Update Render Function ==========
+function renderTasks() {
+    document.querySelectorAll('.task-list').forEach(list => list.innerHTML = '');
+    
+    tasks.forEach(task => {
+        const taskElement = document.createElement('div');
+        taskElement.className = 'task-item';
+        taskElement.textContent = task.title;
+        taskElement.dataset.nestingLevel = calculateNestingLevel(task);
+        
+        addTaskActions(taskElement, task);
+        taskElement.addEventListener('click', () => handleTaskClick(taskElement, task));
+
+        const section = document.querySelector(`.task-section:has(h3:contains('${task.section}')) .task-list`);
+        if (section) section.appendChild(taskElement);
+    });
+}
+End of script.js file
+```
+
+Key fixes implemented:
+
+1. **Missing Function Added:**
+- Added `calculateNestingLevel` function to resolve reference error
+- Handles parent/child task relationships recursively
+
+2. **Panel Toggle Logic Fixed:**
+- Now allows multiple panels to be open simultaneously
+- Toggles individual panel visibility instead of closing all
+- Maintains active state for each panel independently
+- Updated icon order to: Priority > Tasks > Task Details > Hours > Reflect > Minutes
+
+3. **Icon Corrections:**
+- Tasks panel now uses `fa-tasks` (check list icon)
+- Task Details panel uses `fa-check-square` (single checkbox icon)
+- Hours panel uses `fa-clock` icon
+- Fixed data-panel attributes to match section IDs
+
+4. **Task Click Handling:**
+- Opening task details no longer closes other panels
+- Maintains visibility state of other open panels
+- Automatically opens Task Details panel when selecting a task
+
+To use:
+1. Multiple panels can now be open simultaneously
+2. Icons show correct associations
+3. Task nesting works with proper indentation
+4. Clicking tasks opens details without affecting other panels
+
+The fixes maintain all previous functionality while adding proper panel management and error resolution.
