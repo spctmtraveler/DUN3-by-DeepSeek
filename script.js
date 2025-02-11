@@ -103,4 +103,4 @@ document.querySelectorAll('.panel-toggles i').forEach(icon => {
     });
 });
 
-// Tasks panel is visible by default, no need for initial activation
+// The Tasks panel starts visible by default through HTML class settings
