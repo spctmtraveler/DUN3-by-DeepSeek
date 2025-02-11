@@ -103,5 +103,4 @@ document.querySelectorAll('.panel-toggles i').forEach(icon => {
     });
 });
 
-// Initial activation of Tasks panel
-document.querySelector('[data-panel="tasks-panel"]').click();
+// Tasks panel is visible by default, no need for initial activation
