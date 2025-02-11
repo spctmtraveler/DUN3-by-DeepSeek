@@ -1,0 +1,249 @@
+Below is the complete “Debugging_Instructions.txt” file that details every change (with exact file names, locations, and code snippets) you need to make in order to fix the following issues:
+
+1. **Priority Panel should be on the far left.**  
+2. **The “Task” Panel is entirely missing and its icon is missing (should be a checkbox).**  
+3. **The “Sort” button should go below everything else in the Priority Panel.**  
+4. **The “Tasks” panel should be open by default.**
+
+Please review the instructions below and apply the changes to your project files accordingly.
+
+------------------------------------------------------------
+DEBUGGING_Instructions.txt
+------------------------------------------------------------
+
+DEBUGGING INSTRUCTIONS FOR DUN3 TASK MANAGEMENT APP
+------------------------------------------------------------
+Below are the recommended changes to resolve the bugs and align the UI with the design requirements.
+
+ISSUE SUMMARY:
+---------------
+1. **Priority Panel Position:**  
+   – The Priority Panel must be the leftmost (first) panel in the panel container.
+
+2. **Task Panel Missing & Icon Update:**  
+   – The “Task” (Tasks) Panel is not being shown as intended, and its icon should be a checkbox instead of the current “fa-tasks”.  
+   – The Tasks Panel should be open by default.
+
+3. **Sort Button Placement:**  
+   – The “Sort” button in the Priority Panel should be placed at the bottom (after all other content) instead of immediately after the priority labels.
+
+------------------------------------------------------------
+CHANGE 1: Reorder Panels in index.html
+------------------------------------------------------------
+**File:** index.html
+
+**Goal:**  
+Place the Priority Panel as the leftmost panel and ensure the Tasks Panel is visible by default (i.e. it does not have the “hidden” class).
+
+**Steps:**
+1. **Reorder the Section Blocks:**  
+   – Within the `<div class="panel-container">`, cut the entire Priority Panel block (the `<section id="priority-panel" ...>` element) and paste it before the Tasks Panel block.
+2. **Ensure Tasks Panel is Open:**  
+   – Verify that the Tasks Panel `<section id="tasks-panel" ...>` does **not** have the “hidden” class.
+
+**Example (Modified Order):**
+
+```html
+<div class="panel-container">
+    <!-- Priority Panel (moved to be the first/leftmost) -->
+    <section id="priority-panel" class="panel hidden">
+        <h2>Priority</h2>
+        <div class="priority-labels">
+            <div class="priority-label">Fire</div>
+            <div class="priority-label">Fast</div>
+            <div class="priority-label">Flow</div>
+            <div class="priority-label">Fear</div>
+            <div class="priority-label">First</div>
+        </div>
+        <div class="priority-grid">
+            <div class="priority-item">
+                <span class="task-title">Sample Task</span>
+                <div class="attributes">
+                    <div class="attribute-box"></div>
+                    <div class="attribute-box"></div>
+                    <div class="attribute-box"></div>
+                    <div class="attribute-box"></div>
+                    <div class="attribute-box"></div>
+                </div>
+            </div>
+            <div class="no-tasks">No tasks available</div>
+        </div>
+        <!-- The Sort button is moved here (see CHANGE 3) -->
+        <button id="sort-btn" class="accent-btn">Sort</button>
+    </section>
+
+    <!-- Tasks Panel (ensure this panel is visible by default: do not include "hidden" class) -->
+    <section id="tasks-panel" class="panel">
+        <h2>Tasks</h2>
+        <div class="section-group">
+            <div class="task-section">
+                <h3>Triage</h3>
+                <div class="task-list">
+                    <div class="task-item">Triage Task</div>
+                    <div class="task-item child">Mail-check</div>
+                </div>
+            </div>
+            <div class="task-section">
+                <h3>A</h3>
+                <div class="task-list">
+                    <div class="task-item">Sample Task A</div>
+                </div>
+            </div>
+            <div class="task-section">
+                <h3>B</h3>
+                <div class="task-list">
+                    <div class="task-item">Sample Task B</div>
+                </div>
+            </div>
+            <div class="task-section">
+                <h3>C</h3>
+                <div class="task-list">
+                    <div class="task-item">Sample Task C</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Hours Panel -->
+    <section id="hours-panel" class="panel hidden">
+        <h2>Hours</h2>
+        <!-- Hours panel content remains unchanged -->
+        ...
+    </section>
+
+    <!-- Reflect Panel -->
+    <section id="reflect-panel" class="panel hidden">
+        <h2>Reflect</h2>
+        <!-- Reflect panel content remains unchanged -->
+        ...
+    </section>
+
+    <!-- Minutes Panel -->
+    <section id="minutes-panel" class="panel hidden">
+        <h2>Minutes</h2>
+        <!-- Minutes panel content remains unchanged -->
+        ...
+    </section>
+</div>
+```
+
+------------------------------------------------------------
+CHANGE 2: Update the Panel Toggle Icons in index.html
+------------------------------------------------------------
+**File:** index.html
+
+**Goal:**  
+Update the icons in the top banner so that:
+- The leftmost icon corresponds to the Priority Panel.
+- The Tasks Panel’s icon is shown as a checkbox (instead of “fa-tasks”) and has the “active” class because the Tasks Panel is open by default.
+
+**Steps:**
+1. **Reorder the icons** in the `<div class="panel-toggles">` so that the Priority Panel icon appears first.
+2. **Replace the Tasks Panel icon** (currently “fa-tasks”) with a checkbox icon (use “fa-check-square”).
+
+**Original Markup:**
+```html
+<div class="panel-toggles">
+    <i class="fas fa-tasks active" data-panel="tasks-panel"></i>
+    <i class="fas fa-bullseye" data-panel="priority-panel"></i>
+    <i class="fas fa-clock" data-panel="hours-panel"></i>
+    <i class="fas fa-lightbulb" data-panel="reflect-panel"></i>
+    <i class="fas fa-hourglass" data-panel="minutes-panel"></i>
+</div>
+```
+
+**Modified Markup:**
+```html
+<div class="panel-toggles">
+    <!-- Priority Panel icon (bullseye) -->
+    <i class="fas fa-bullseye" data-panel="priority-panel"></i>
+    <!-- Tasks Panel icon (checkbox) with "active" since Tasks Panel is open -->
+    <i class="fas fa-check-square active" data-panel="tasks-panel"></i>
+    <i class="fas fa-clock" data-panel="hours-panel"></i>
+    <i class="fas fa-lightbulb" data-panel="reflect-panel"></i>
+    <i class="fas fa-hourglass" data-panel="minutes-panel"></i>
+</div>
+```
+
+------------------------------------------------------------
+CHANGE 3: Move the "Sort" Button in the Priority Panel
+------------------------------------------------------------
+**File:** index.html
+
+**Goal:**  
+Place the “Sort” button at the bottom of the Priority Panel (i.e., after all the grid content).
+
+**Steps:**
+1. **Cut the “Sort” button markup** from its current location (immediately after the priority-labels).
+2. **Paste it after the `<div class="priority-grid">…</div>` block** so that it appears as the last element within the Priority Panel.
+
+**Modified Priority Panel Example:**
+```html
+<section id="priority-panel" class="panel hidden">
+    <h2>Priority</h2>
+    <div class="priority-labels">
+        <div class="priority-label">Fire</div>
+        <div class="priority-label">Fast</div>
+        <div class="priority-label">Flow</div>
+        <div class="priority-label">Fear</div>
+        <div class="priority-label">First</div>
+    </div>
+    <div class="priority-grid">
+        <div class="priority-item">
+            <span class="task-title">Sample Task</span>
+            <div class="attributes">
+                <div class="attribute-box"></div>
+                <div class="attribute-box"></div>
+                <div class="attribute-box"></div>
+                <div class="attribute-box"></div>
+                <div class="attribute-box"></div>
+            </div>
+        </div>
+        <div class="no-tasks">No tasks available</div>
+    </div>
+    <!-- Sort button now appears at the bottom of the Priority Panel -->
+    <button id="sort-btn" class="accent-btn">Sort</button>
+</section>
+```
+
+------------------------------------------------------------
+CHANGE 4: Ensure "Tasks" Panel Remains Open by Default in script.js
+------------------------------------------------------------
+**File:** script.js
+
+**Goal:**  
+Prevent the Tasks Panel from being toggled closed on page load. (Currently, an auto-click on its icon causes it to hide.)
+
+**Steps:**
+1. Locate the following line near the end of script.js:
+   ```javascript
+   document.querySelector('[data-panel="tasks-panel"]').click();
+   ```
+2. **Remove or comment out this line** to prevent automatic toggling.
+
+**Modified Code:**
+```javascript
+// Removed auto-toggle for Tasks Panel to keep it open by default.
+// document.querySelector('[data-panel="tasks-panel"]').click();
+```
+
+------------------------------------------------------------
+ADDITIONAL NOTES:
+------------------------------------------------------------
+- **Consistent Formatting & Comments:**  
+  Ensure that you keep the formatting and comment style consistent with the rest of your codebase.
+  
+- **Testing:**  
+  After applying these changes, verify that:
+  - The Priority Panel is the first (leftmost) panel in the container.
+  - The Tasks Panel is visible on page load and its icon displays as a checkbox (with the “active” class).
+  - The “Sort” button in the Priority Panel is positioned at the bottom of the panel.
+  - Panel toggle behavior (by clicking the icons) works as expected.
+
+Apply these changes carefully to each file to achieve the desired layout and functionality. If further issues arise, use the inline comments in the code snippets for guidance.
+
+------------------------------------------------------------
+END OF DEBUGGING_INSTRUCTIONS
+------------------------------------------------------------
+
+Simply save this as “Debugging_Instructions.txt” and follow the instructions to update your code. Happy debugging!
