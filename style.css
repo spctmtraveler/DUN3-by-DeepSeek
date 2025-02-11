@@ -294,6 +294,45 @@ input[type="text"] {
 .task-item[data-nesting-level="2"] { margin-left: 80px; }
 .task-item[data-nesting-level="3"] { margin-left: 120px; }
 
+/* ========== Drag-and-Drop Styles ========== */
+.drag-placeholder {
+    border: 2px dashed var(--accent);
+    opacity: 0.5;
+    margin: 4px 0;
+}
+
+.task-item.dragging {
+    opacity: 0.5;
+    transform: rotate(2deg);
+}
+
+/* ========== Completed Tasks ========== */
+.task-item.completed {
+    opacity: 0.6;
+    text-decoration: line-through;
+}
+
+/* ========== Date Input ========== */
+.task-date {
+    background: #333;
+    border: 1px solid var(--border-color);
+    color: var(--text-color);
+    padding: 0.5rem;
+    border-radius: 4px;
+}
+
+/* ========== Error State ========== */
+input.error {
+    border-color: #ff4444 !important;
+    animation: shake 0.5s;
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(5px); }
+    75% { transform: translateX(-5px); }
+}
+
 /* ========== Task Details Panel Styles ========== */
 .task-details {
     display: flex;

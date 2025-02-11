@@ -1,4 +1,3 @@
-
 let tasks = [];
 let selectedTaskId = null;
 
@@ -25,7 +24,8 @@ function createTask(title) {
         First: 0,
         Fire: 0,
         Fear: 0,
-        Flow: 0
+        Flow: 0,
+        completed: false // Added completed property
     };
 }
 
@@ -46,7 +46,7 @@ document.querySelectorAll('.panel-toggles i').forEach(icon => {
         e.stopPropagation();
         const panelId = icon.dataset.panel;
         const panel = document.getElementById(panelId);
-        
+
         // Toggle panel visibility
         panel.classList.toggle('hidden');
         // Toggle icon active state
@@ -58,7 +58,7 @@ document.querySelectorAll('.panel-toggles i').forEach(icon => {
 function handleTaskClick(taskElement, task) {
     selectedTaskId = task.id;
     showTaskDetails(task);
-    
+
     // Open Task Details panel if not already open
     const taskPanel = document.getElementById('task-panel');
     if (taskPanel.classList.contains('hidden')) {
@@ -76,7 +76,7 @@ function showTaskDetails(task) {
             <input type="text" class="task-title-edit" value="${task.title}" />
             <div class="priority-attributes">
                 ${Object.entries(task).map(([key, val]) => 
-                    key === 'title' ? '' : `
+                    key === 'title' || key === 'completed' ? '' : `
                     <div class="attribute-control">
                         <label>${key}</label>
                         <input type="number" value="${val}" 
@@ -102,16 +102,23 @@ function saveTaskChanges(taskId) {
     renderTasks();
 }
 
+
+function toggleTaskComplete(taskId) {
+    const task = tasks.find(t => t.id === taskId);
+    if (task) task.completed = !task.completed;
+    renderTasks();
+}
+
 // ========== Updated Render Function ==========
 function renderTasks() {
     document.querySelectorAll('.task-list').forEach(list => list.innerHTML = '');
-    
+
     tasks.forEach(task => {
         const taskElement = document.createElement('div');
         taskElement.className = 'task-item';
         taskElement.textContent = task.title;
         taskElement.dataset.nestingLevel = calculateNestingLevel(task);
-        
+
         addTaskActions(taskElement, task);
         taskElement.addEventListener('click', () => handleTaskClick(taskElement, task));
 
@@ -127,7 +134,7 @@ document.getElementById('sort-btn').addEventListener('click', () => {
         tasks.filter(t => t.section === section)
             .sort(prioritySort)
     );
-    
+
     document.querySelectorAll('.attribute-box').forEach(b => b.style.visibility = 'hidden');
     renderTasks();
 });
@@ -137,6 +144,21 @@ function highlightTask(element, task) {
     element.classList.add('selected-task');
     document.querySelector(`[data-panel="reflect-panel"]`).click();
 }
+
+function addTaskActions(taskElement, task) {
+    const actions = document.createElement('div');
+    actions.className = 'task-actions';
+
+    // Completion Checkbox
+    const checkbox = document.createElement('input');
+    checkbox.type = 'checkbox';
+    checkbox.checked = task.completed;
+    checkbox.onchange = () => toggleTaskComplete(task.id);
+    actions.appendChild(checkbox);
+
+    taskElement.appendChild(actions);
+}
+
 
 // Initialize with sample tasks
 tasks = [
