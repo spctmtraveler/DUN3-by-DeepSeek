@@ -1,0 +1,265 @@
+Below is the complete “Debugging_Instructions_v2.txt” file that explains, step‐by‐step, exactly what to change in your code (and where) so that your application meets the full requirements. This set of instructions fixes all the reported issues:
+ 
+1. The “Sort” button in the Priority panel must be placed at the very bottom of that panel (after all other content).  
+2. The Priority panel must appear as the leftmost (first) panel.  
+3. A new “Task” panel (i.e. Task Details panel) must be added (so there are six panels total) and placed in the following order:  
+   **Priority / Tasks / Task / Hours / Reflect / Minutes**.  
+4. The Tasks panel must be open by default (and its toggle icon updated to a checkbox), while the other panels remain hidden on load.
+ 
+Follow these instructions carefully. Make sure to add proper comments in your code so future debugging is easier.
+
+────────────────────────────
+Debugging_Instructions_v2.txt
+────────────────────────────
+
+===============================================
+CHANGE 1: UPDATE index.html – REORDER PANELS & ADD THE “TASK” PANEL
+===============================================
+
+**A. Reorder the Panels in the “panel-container”**
+
+Your current index.html contains only five panels. You need to create six panels (in this order):
+
+1. **Priority Panel**  
+2. **Tasks Panel**  
+3. **Task Panel** (the new Task Details panel)  
+4. **Hours Panel**  
+5. **Reflect Panel**  
+6. **Minutes Panel**
+
+**Steps:**
+
+1. **Cut and Reorder the Panels:**  
+   In your `<div class="panel-container">` section, move the existing panels so that the Priority panel comes first. Then, ensure that the Tasks panel is second. Next, create a new panel for Task Details (see step B below). Finally, include the Hours, Reflect, and Minutes panels (which you already have) in that order.
+
+2. **Ensure Panel Visibility Classes:**  
+   • Set the Tasks Panel’s class to `"panel"` (open by default).  
+   • All other panels (Priority, Task, Hours, Reflect, Minutes) should have `"panel hidden"` so they are hidden on load.
+
+**B. Create a New “Task” Panel (Task Details Panel)**
+
+Immediately after the Tasks Panel, add the following new section:
+
+```html
+<!-- Task Panel: New Task Details panel -->
+<section id="task-panel" class="panel hidden">
+    <h2>Task Details</h2>
+    <div class="task-details">
+        <!-- Placeholder for Task Details: title, revisit date, overview, details, time estimate, etc. -->
+        <p>Select a task to view its details.</p>
+    </div>
+</section>
+```
+
+**C. Adjust the Priority Panel Markup to Move the “Sort” Button to the Bottom**
+
+Locate the current Priority Panel code. Cut the `<button id="sort-btn" class="accent-btn">Sort</button>` element from its current location and paste it *after* the `<div class="priority-grid"> … </div>` block. The modified Priority Panel should look like this:
+
+```html
+<!-- Priority Panel (now first in order) -->
+<section id="priority-panel" class="panel hidden">
+    <h2>Priority</h2>
+    <div class="priority-labels">
+        <div class="priority-label">Fire</div>
+        <div class="priority-label">Fast</div>
+        <div class="priority-label">Flow</div>
+        <div class="priority-label">Fear</div>
+        <div class="priority-label">First</div>
+    </div>
+    <div class="priority-grid">
+        <div class="priority-item">
+            <span class="task-title">Sample Task</span>
+            <div class="attributes">
+                <div class="attribute-box"></div>
+                <div class="attribute-box"></div>
+                <div class="attribute-box"></div>
+                <div class="attribute-box"></div>
+                <div class="attribute-box"></div>
+            </div>
+        </div>
+        <div class="no-tasks">No tasks available</div>
+    </div>
+    <!-- Moved Sort button to appear at the very bottom -->
+    <button id="sort-btn" class="accent-btn">Sort</button>
+</section>
+```
+
+**D. Final Revised Structure of Your Panel Container**
+
+Your `<div class="panel-container">` should now include six sections in the following order:
+
+```html
+<div class="panel-container">
+    <!-- 1. Priority Panel (hidden by default) -->
+    ... [Priority Panel markup as above] ...
+
+    <!-- 2. Tasks Panel (open by default) -->
+    <section id="tasks-panel" class="panel">
+        <h2>Tasks</h2>
+        <div class="section-group">
+            <div class="task-section">
+                <h3>Triage</h3>
+                <div class="task-list">
+                    <div class="task-item">Triage Task</div>
+                    <div class="task-item child">Mail-check</div>
+                </div>
+            </div>
+            <div class="task-section">
+                <h3>A</h3>
+                <div class="task-list">
+                    <div class="task-item">Sample Task A</div>
+                </div>
+            </div>
+            <div class="task-section">
+                <h3>B</h3>
+                <div class="task-list">
+                    <div class="task-item">Sample Task B</div>
+                </div>
+            </div>
+            <div class="task-section">
+                <h3>C</h3>
+                <div class="task-list">
+                    <div class="task-item">Sample Task C</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 3. Task Panel (new, hidden by default) -->
+    <section id="task-panel" class="panel hidden">
+        <h2>Task Details</h2>
+        <div class="task-details">
+            <p>Select a task to view its details.</p>
+        </div>
+    </section>
+
+    <!-- 4. Hours Panel (hidden by default) -->
+    <section id="hours-panel" class="panel hidden">
+        <h2>Hours</h2>
+        <div class="hour-list">
+            <!-- ... your hour blocks ... -->
+        </div>
+    </section>
+
+    <!-- 5. Reflect Panel (hidden by default) -->
+    <section id="reflect-panel" class="panel hidden">
+        <h2>Reflect</h2>
+        <div class="reflect-content">
+            <div class="question-block">What went well today?</div>
+            <div class="question-block">What could be improved?</div>
+            <div class="question-block">Key takeaways:</div>
+        </div>
+    </section>
+
+    <!-- 6. Minutes Panel (hidden by default) -->
+    <section id="minutes-panel" class="panel hidden">
+        <h2>Minutes</h2>
+        <div class="timer-container">
+            <div class="timer-display">25:00</div>
+            <div class="timer-controls">
+                <button class="timer-btn">Start</button>
+                <button class="timer-btn">Pause</button>
+                <button class="timer-btn">+1</button>
+                <button class="timer-btn">-1</button>
+                <button class="timer-btn">Reset</button>
+                <button class="timer-btn accent-btn">Done</button>
+            </div>
+            <div class="task-total">Task Total: 0 min</div>
+        </div>
+    </section>
+</div>
+```
+
+===============================================
+CHANGE 2: UPDATE index.html – REORDER & UPDATE TOP BANNER PANEL TOGGLES
+===============================================
+
+Your top banner currently has five toggle icons. You need to update and reorder these so that they correspond (from left to right) with the six panels in this order:
+
+1. **Priority Panel** – use the bullseye icon (fa-bullseye)  
+2. **Tasks Panel** – use a checkbox icon (fa-check-square) and mark it as active by default  
+3. **Task Panel** – use an info icon (fa-info-circle) (or any appropriate icon for task details)  
+4. **Hours Panel** – use a clock icon (fa-clock)  
+5. **Reflect Panel** – use a lightbulb icon (fa-lightbulb)  
+6. **Minutes Panel** – use an hourglass icon (fa-hourglass)
+
+**Steps:**
+
+1. In the `<div class="panel-toggles">` section in index.html, replace the current markup with the following:
+
+```html
+<div class="panel-toggles">
+    <!-- Priority Panel Icon -->
+    <i class="fas fa-bullseye" data-panel="priority-panel"></i>
+    <!-- Tasks Panel Icon (open by default) -->
+    <i class="fas fa-check-square active" data-panel="tasks-panel"></i>
+    <!-- Task Details Panel Icon -->
+    <i class="fas fa-info-circle" data-panel="task-panel"></i>
+    <!-- Hours Panel Icon -->
+    <i class="fas fa-clock" data-panel="hours-panel"></i>
+    <!-- Reflect Panel Icon -->
+    <i class="fas fa-lightbulb" data-panel="reflect-panel"></i>
+    <!-- Minutes Panel Icon -->
+    <i class="fas fa-hourglass" data-panel="minutes-panel"></i>
+</div>
+```
+
+2. Save your changes. (Note: The “active” class on the Tasks Panel icon ensures that its panel is open by default.)
+
+===============================================
+CHANGE 3: UPDATE script.js – REMOVE AUTO-TOGGLE OF TASKS PANEL
+===============================================
+
+Your script.js file currently simulates a click on the Tasks Panel icon at the bottom, which may be causing unwanted toggling. To keep the Tasks panel open by default, remove or comment out that line.
+
+**Steps:**
+
+1. Open script.js and locate the following line near the end:
+
+   ```javascript
+   // Initial activation of Tasks panel
+   document.querySelector('[data-panel="tasks-panel"]').click();
+   ```
+
+2. Remove or comment out this line:
+
+   ```javascript
+   // document.querySelector('[data-panel="tasks-panel"]').click();
+   ```
+
+3. Save the file.
+
+===============================================
+CHANGE 4: VERIFY CSS (style.css)
+===============================================
+
+No structural changes in style.css are required for the reordering; your current CSS (for example, the flex settings in `.panel-container` and the `.panel` rules) already supports horizontal scrolling and fixed widths. However, verify that your panels look correct after the HTML changes. If you need to adjust spacing (for example, if the new “Task” panel needs a little extra margin), add comments in style.css accordingly.
+
+===============================================
+FINAL TESTING
+===============================================
+
+After you’ve made the above changes, test your application:
+
+- **Top Banner:** Ensure that the six panel toggle icons appear in this order from left to right:  
+  Priority (bullseye), Tasks (checkbox, active), Task (info), Hours (clock), Reflect (lightbulb), Minutes (hourglass).
+
+- **Panel Container:** Verify that the panels appear (from left to right) as:
+  1. Priority Panel (hidden by default; you can toggle it)  
+  2. Tasks Panel (open by default)  
+  3. Task Details Panel (new, hidden by default)  
+  4. Hours Panel (hidden)  
+  5. Reflect Panel (hidden)  
+  6. Minutes Panel (hidden)
+
+- **Priority Panel “Sort” Button:** Open the Priority panel and check that the “Sort” button is at the bottom (below the priority grid).
+
+- **Panel Toggle Behavior:** Clicking each icon should toggle its corresponding panel’s visibility with smooth transitions.
+
+- **Task Details Panel:** Even though it may only display a placeholder message for now, confirm that the new Task panel is present in the DOM.
+
+────────────────────────────
+END OF DEBUGGING_INSTRUCTIONS_v2.txt
+────────────────────────────
+
+Apply these changes to your files (index.html and script.js) and verify that the UI now displays six panels in the correct order with the appropriate icons and that the “Sort” button in the Priority panel is at the very bottom. If further adjustments are needed, use the inline comments as guidance. Happy coding!
