@@ -69,17 +69,20 @@ function handleTaskClick(taskElement, task) {
 
 // ========== Enhanced Task Details ==========
 function showTaskDetails(task) {
+    if (!task) return;
+    
     const detailsPanel = document.getElementById('task-panel');
+    const validAttributes = ['Fast', 'First', 'Fire', 'Fear', 'Flow'];
+    
     detailsPanel.innerHTML = `
         <h2>Task Details</h2>
         <div class="task-details">
-            <input type="text" class="task-title-edit" value="${task.title}" />
+            <input type="text" class="task-title-edit" value="${task.title || ''}" />
             <div class="priority-attributes">
-                ${Object.entries(task).map(([key, val]) => 
-                    key === 'title' || key === 'completed' ? '' : `
+                ${validAttributes.map(key => `
                     <div class="attribute-control">
                         <label>${key}</label>
-                        <input type="number" value="${val}" 
+                        <input type="number" value="${task[key] || 0}" 
                                data-attr="${key}" 
                                onchange="updateTaskAttribute(${task.id}, '${key}', this.value)" />
                     </div>`
