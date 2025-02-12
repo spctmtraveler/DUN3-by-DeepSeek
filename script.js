@@ -122,8 +122,15 @@ function renderTasks() {
         addTaskActions(taskElement, task);
         taskElement.addEventListener('click', () => handleTaskClick(taskElement, task));
 
-        const section = document.querySelector(`.task-section:has(h3:contains('${task.section}')) .task-list`);
-        if (section) section.appendChild(taskElement);
+        // Find section by matching h3 text content
+        const sections = document.querySelectorAll('.task-section');
+        const section = Array.from(sections).find(s => 
+            s.querySelector('h3').textContent === task.section
+        );
+        if (section) {
+            const taskList = section.querySelector('.task-list');
+            taskList.appendChild(taskElement);
+        }
     });
 }
 
