@@ -111,25 +111,40 @@ function toggleTaskComplete(taskId) {
 
 // ========== Updated Render Function ==========
 function renderTasks() {
+    // Clear all task lists
     document.querySelectorAll('.task-list').forEach(list => list.innerHTML = '');
 
+    // Create a map of sections
+    const sectionMap = {};
+    document.querySelectorAll('.task-section').forEach(section => {
+        const sectionName = section.querySelector('h3')?.textContent;
+        if (sectionName) {
+            sectionMap[sectionName] = section.querySelector('.task-list');
+        }
+    });
+
+    // Render each task
     tasks.forEach(task => {
+        if (!task || !task.title) return;  // Skip invalid tasks
+
         const taskElement = document.createElement('div');
         taskElement.className = 'task-item';
         taskElement.textContent = task.title;
-        taskElement.dataset.nestingLevel = calculateNestingLevel(task);
+        
+        // Set nesting level
+        const level = calculateNestingLevel(task);
+        if (level > 0) {
+            taskElement.dataset.nestingLevel = level;
+        }
 
+        // Add actions and click handler
         addTaskActions(taskElement, task);
         taskElement.addEventListener('click', () => handleTaskClick(taskElement, task));
 
-        // Find section by matching h3 text content
-        const sections = document.querySelectorAll('.task-section');
-        const section = Array.from(sections).find(s => 
-            s.querySelector('h3').textContent === task.section
-        );
-        if (section) {
-            const taskList = section.querySelector('.task-list');
-            taskList.appendChild(taskElement);
+        // Add to appropriate section
+        const targetList = sectionMap[task.section || 'Triage'];
+        if (targetList) {
+            targetList.appendChild(taskElement);
         }
     });
 }
