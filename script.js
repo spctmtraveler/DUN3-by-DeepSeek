@@ -111,40 +111,68 @@ function toggleTaskComplete(taskId) {
 
 // ========== Updated Render Function ==========
 function renderTasks() {
+    if (!Array.isArray(tasks)) {
+        tasks = [];
+        return;
+    }
+
     // Clear all task lists
     document.querySelectorAll('.task-list').forEach(list => list.innerHTML = '');
 
     // Create a map of sections
     const sectionMap = {};
     document.querySelectorAll('.task-section').forEach(section => {
-        const sectionName = section.querySelector('h3')?.textContent;
-        if (sectionName) {
-            sectionMap[sectionName] = section.querySelector('.task-list');
+        const header = section.querySelector('h3');
+        if (header) {
+            const sectionName = header.textContent;
+            const taskList = section.querySelector('.task-list');
+            if (sectionName && taskList) {
+                sectionMap[sectionName] = taskList;
+            }
         }
     });
 
+    // Ensure Triage section exists
+    if (!sectionMap['Triage']) {
+        console.warn('Triage section not found');
+        return;
+    }
+
     // Render each task
     tasks.forEach(task => {
-        if (!task || !task.title) return;  // Skip invalid tasks
+        if (!task || typeof task !== 'object') return;
+        if (!task.title || typeof task.title !== 'string') return;
 
         const taskElement = document.createElement('div');
         taskElement.className = 'task-item';
         taskElement.textContent = task.title;
         
         // Set nesting level
-        const level = calculateNestingLevel(task);
-        if (level > 0) {
-            taskElement.dataset.nestingLevel = level;
+        if (typeof calculateNestingLevel === 'function') {
+            const level = calculateNestingLevel(task);
+            if (level > 0) {
+                taskElement.dataset.nestingLevel = level;
+            }
         }
 
         // Add actions and click handler
-        addTaskActions(taskElement, task);
-        taskElement.addEventListener('click', () => handleTaskClick(taskElement, task));
+        if (typeof addTaskActions === 'function') {
+            addTaskActions(taskElement, task);
+        }
+        
+        taskElement.addEventListener('click', () => {
+            if (typeof handleTaskClick === 'function') {
+                handleTaskClick(taskElement, task);
+            }
+        });
 
         // Add to appropriate section
-        const targetList = sectionMap[task.section || 'Triage'];
+        const section = task.section || 'Triage';
+        const targetList = sectionMap[section];
         if (targetList) {
             targetList.appendChild(taskElement);
+        } else {
+            sectionMap['Triage'].appendChild(taskElement);
         }
     });
 }
